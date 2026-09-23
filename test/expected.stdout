@@ -1,0 +1,35 @@
+MonadGen.resize
+Gen.resize
+Try with some little Gens first
+-2832705
+3499745
+-32076162
+-4161910
+Testing stack safety of Gen
+57112725
+272187516
+Generating via Generic
+[(F2 { bar: [-872836,178720,-596000,568475,685920,628153,561935,-471988], foo: 932648 }),(F2 { bar: [-732741,-516389], foo: 282162 }),(F2 { bar: [-117764,-271952,-773789,260875,-46527], foo: 770332 }),(F0 94155),(F1 -654345 -6201),(F2 { bar: [-660399,-655959,995686,296205,-192696,837069,653570], foo: -507946 }),(F2 { bar: [499981,772162,454206], foo: 452502 }),(F1 97249 -741045),(F0 -980882),(F0 979317)]
+Arbitrary instance for records
+["{ foo: 601853; nested.bar: true }","{ foo: 452502; nested.bar: true }","{ foo: 412969; nested.bar: false }","{ foo: 454206; nested.bar: false }","{ foo: -89860; nested.bar: false }","{ foo: -741045; nested.bar: true }","{ foo: 524062; nested.bar: false }","{ foo: -980882; nested.bar: false }","{ foo: -763570; nested.bar: false }","{ foo: -945196; nested.bar: false }"]
+100/100 test(s) passed.
+100/100 test(s) passed.
+100/100 test(s) passed.
+100/100 test(s) passed.
+100/100 test(s) passed.
+100/100 test(s) passed.
+100/100 test(s) passed.
+0/100 test(s) passed.
+100/100 test(s) passed.
+0/100 test(s) passed.
+100/100 test(s) passed.
+0/100 test(s) passed.
+100/100 test(s) passed.
+0/100 test(s) passed.
+100/100 test(s) passed.
+0/100 test(s) passed.
+100/100 test(s) passed.
+0/100 test(s) passed.
+Testing stack safety of quickCheckPure'
+Completed 100000 runs.
+Checking that chooseFloat over the whole Number range always yields a finite value

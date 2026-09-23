@@ -19,7 +19,7 @@ import Random.LCG (mkSeed)
 import Test.Assert (assert)
 import Test.QuickCheck (class Testable, quickCheck, quickCheckPure', (/=?), (<=?), (<?), (==?), (>=?), (>?))
 import Test.QuickCheck.Arbitrary (arbitrary, genericArbitrary, class Arbitrary)
-import Test.QuickCheck.Gen (Gen, Size, randomSample, randomSample', resize, runGen, sized, vectorOf)
+import Test.QuickCheck.Gen (Gen, Size, randomSample, sample, resize, runGen, sized, vectorOf)
 import Data.Maybe (Maybe(..))
 import Data.List as List
 
@@ -51,20 +51,20 @@ main = do
   assert (testResize (resize))
 
   log "Try with some little Gens first"
-  logShow =<< go 10
-  logShow =<< go 100
-  logShow =<< go 1000
-  logShow =<< go 10000
+  logShow (go 10)
+  logShow (go 100)
+  logShow (go 1000)
+  logShow (go 10000)
 
   log "Testing stack safety of Gen"
-  logShow =<< go 20000
-  logShow =<< go 100000
+  logShow (go 20000)
+  logShow (go 100000)
 
   log "Generating via Generic"
-  logShow =<< randomSample' 10 (arbitrary :: Gen (Foo Int))
+  logShow (sample (mkSeed 42) 10 (arbitrary :: Gen (Foo Int)))
 
   log "Arbitrary instance for records"
-  listOfRecords ← randomSample' 10 (arbitrary :: Gen { foo :: Int, nested :: { bar :: Boolean } })
+  let listOfRecords = sample (mkSeed 42) 10 (arbitrary :: Gen { foo :: Int, nested :: { bar :: Boolean } })
   let toString rec = "{ foo: " <> show rec.foo <> "; nested.bar: " <> show rec.nested.bar <> " }"
   logShow (toString <$> listOfRecords)
 
@@ -98,7 +98,8 @@ main = do
   randomSample (MGen.chooseFloat ((-1.7976931348623157e+308)) (1.7976931348623157e+308)) >>= assert <<< all isFinite
 
   where
-  go n = map (sum <<< unsafeHead) $ randomSample' 1 (vectorOf n (arbitrary :: Gen Int))
+  -- Fixed seed so the printed samples are reproducible in CI.
+  go n = sum <<< unsafeHead $ sample (mkSeed 42) 1 (vectorOf n (arbitrary :: Gen Int))
 
   unsafeHead :: forall x. Array x -> x
   unsafeHead xs = unsafePartial (head xs)
